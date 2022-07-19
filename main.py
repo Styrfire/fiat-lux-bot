@@ -12,7 +12,7 @@ class Bot(discord.Client):
 
     async def on_ready(self):
         print("Online - Fiat Lux Bot")
-        print("EXAMPLE_ENVIRONMENT_VARIABLE = " + os.getenv("EXAMPLE_ENVIRONMENT_VARIABLE"))
+        # print("EXAMPLE_ENVIRONMENT_VARIABLE = " + os.getenv("EXAMPLE_ENVIRONMENT_VARIABLE"))
 
     async def on_raw_reaction_add(self, payload):
         if payload.user_id == self.user.id:
@@ -30,13 +30,21 @@ class Bot(discord.Client):
 
         if message.content == "^example_command":
             # Example function (take out return when uncommenting function)
-            # await stuff.do_stuff()
+            await do_stuff(message)
             return
 
         if message.content == "^another_example_command":
             # Example function (take out return when uncommenting function)
-            # await stuff.do_lots_of_stuff()
+            await do_lots_of_stuff(message)
             return
+
+
+async def do_stuff(message):
+    await message.channel.send("Fiat Lux is doing stuff!")
+
+
+async def do_lots_of_stuff(message):
+    await message.channel.send("Fiat Lux is doing lots of stuff!")
 
 
 # Intents are the buckets of events that the discord bot subscribes to
