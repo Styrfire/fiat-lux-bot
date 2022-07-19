@@ -1,6 +1,8 @@
 # Environment variables
 .env
 
+google_credentials
+
 # IDE specific files
 venv
 .idea

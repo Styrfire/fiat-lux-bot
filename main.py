@@ -1,7 +1,9 @@
 # Third party modules
-import asyncio
 import discord
 import os
+import gspread
+
+import service.google_sheets_service as google_sheets_service
 
 from dotenv import load_dotenv
 
@@ -9,6 +11,8 @@ load_dotenv()
 
 
 class Bot(discord.Client):
+
+    google_service = gspread.service_account("google_credentials/service_account.json")
 
     async def on_ready(self):
         print("Online - Fiat Lux Bot")
@@ -29,23 +33,18 @@ class Bot(discord.Client):
         guild = message.guild
 
         if message.content == "^example_command":
-            # Example function (take out return when uncommenting function)
+            # Example function
             await do_stuff(message)
-            return
 
-        if message.content == "^another_example_command":
-            # Example function (take out return when uncommenting function)
-            await do_lots_of_stuff(message)
-            return
+        if message.content == "^test_spreadsheet":
+            # Example function
+            print("testing the spreadsheet")
+            return_str = await google_sheets_service.test(self.google_service)
+            await message.channel.send(return_str[0] + " and " + return_str[1] + " were the tanks for " + return_str[2])
 
 
 async def do_stuff(message):
     await message.channel.send("Fiat Lux is doing stuff!")
-
-
-async def do_lots_of_stuff(message):
-    await message.channel.send("Fiat Lux is doing lots of stuff!")
-
 
 # Intents are the buckets of events that the discord bot subscribes to
 intents = discord.Intents.default()
